@@ -31,7 +31,8 @@ const addTransactionN = () => {
     const li = document.createElement('li')
     const hr = document.createElement('hr')
     li.classList.add("menos")
-    li.innerHTML = '<p class="minus"> Transferencia</p><p>R$ 10</p>'
+    const ultimo = resultado[0].amountNeg[resultado[0].amountNeg.length-1]          
+    li.innerHTML = `<p class="minus"> Transferencia</p><p>R$ ${ultimo}</p>`
     ulTransactions.append(li,hr)
 }
 
@@ -39,10 +40,12 @@ const addTransactionP = () => {
     const li = document.createElement('li')
     const hr = document.createElement('hr')
     li.classList.add("mais")
-    li.innerHTML = `<p class="plus"> Depósito</p> R$ ${resultado[0].amountPos}<p></p>`
+    const ultimo = resultado[0].amountPos[resultado[0].amountPos.length-1]
+    li.innerHTML = `<p class="plus"> Depósito</p><p> R$ ${ultimo}</p>`
     ulTransactions.append(li,hr)
 }
 const addValorPos = valor => resultado[0].amountPos.push(valor) 
+const addValorNeg = valor => resultado[0].amountNeg.push(valor) 
 
 const transferir = () => {
     const valorTransferencia = document.querySelector("#valorTranf").value
@@ -50,20 +53,22 @@ const transferir = () => {
     const tranferencia = logins => logins.id === contaATransferir  
     const destino = login.filter(tranferencia)
     
-    if(destino.length < 1){
+    if(destino.length < 1 || contaATransferir === resultado[0].id){
         window.alert('Conta inválida')
     }else {
-        window.confirm(`Transferir R$ ${valorTransferencia} para ${destino[0].usuario}?`)
-        if(window.confirm) {
-            window.alert('feito')
-            addTransactionN()
-            
+        if(window.confirm(`Transferir R$ ${valorTransferencia} para ${destino[0].usuario}?`)) {
+            addValorNeg(valorTransferencia)
+            addTransactionN()   
+            document.querySelector("#valorTranf").value = '' 
+            document.querySelector("#transcConta").value = ''
         }      
     }
 }
 
 const emprestimo = () => {
     const valorEmprestimo = document.querySelector("#valorEmpr").value
-    addValorPos(valorEmprestimo)
-    addTransactionP()
+    if(window.confirm(`Confirma o empréstimo de R$ ${valorEmprestimo}?`))
+        addValorPos(valorEmprestimo)
+        addTransactionP()
+        document.querySelector("#valorEmpr").value = ''
 }
