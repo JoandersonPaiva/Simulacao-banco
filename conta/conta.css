@@ -1,0 +1,292 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f0e4e4;
+    height: 100vh;
+    width: 100vw;
+}
+
+div.pagina {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.7fr 0.2fr 3fr 0.5fr;
+    grid-template-areas: 
+    'dados dados dados'
+    'saldo saldo saldo'
+    'transacoes transacoes opcoes'
+    'rodape rodape rodape';
+
+}
+
+header#dados {
+    grid-area: dados;
+    margin-top: 20px;
+
+}
+section#saldo {
+    grid-area: saldo;
+    font-weight: normal;
+    margin: 0px 40px;
+}
+p.cliente {
+    float: left;
+    margin-left: 40px;
+    font-size: 1.5em;
+    width: 100px;
+    text-align: center;
+}
+p.cifrao {
+    float: left;
+    padding: 4px 15px;
+    border: solid 2px;
+    border-radius: 35px;
+    margin-right: 3px;
+    font-size: 35px;
+    font-weight: bold;
+    
+}
+p.dadoContaA {
+    float: left;
+    padding: 10px 80px;
+    background-color: white;
+    margin-right: 5px;
+    margin-top: 3px;
+    border-radius: 20px;
+}
+p.dadoContaB {
+    float: left;
+    padding: 10px 80px;
+    background-color: white;
+    margin-left: 5px;
+    margin-top: 3px;
+    border-radius: 20px;
+    display: block;
+    }
+input.sair{
+    float: right;
+    margin-right: 50px;
+    font-size: 25px;
+    border-radius: 20px;
+    padding: 5px;
+    border: none;
+    background: white;
+    cursor: pointer;
+}
+
+input.sair:hover {
+    background: #f0e4e4;
+    border: solid 1px;
+}
+p.saldoAtual {
+    float: left;
+    font-size: 1.5em;
+    
+}
+p.saldoValor {
+    float: right;
+    font-size: 2.5em;
+    margin-right: 10%;
+}
+
+section#transacoes {
+    grid-area: transacoes;
+    background-color: white;
+    margin: 20px;
+    border-radius: 20px;
+    overflow-y: scroll;
+}
+#transacoes::-webkit-scrollbar {
+    width: 8px;
+}
+#transacoes::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 20px;
+}
+#transacoes::-webkit-scrollbar-thumb:hover {
+    background: rgb(85, 84, 84);
+}
+
+aside#opcoes {
+    grid-area: opcoes;
+}
+
+footer#rodape {
+    grid-area: rodape;
+    align-items: baseline;
+}
+
+div.transferencia {
+    width: 350px;
+    height: 140px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom:15px;
+    background: #febf02;
+}
+
+div.transferencia p {
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 20px;
+    margin: 20px;
+    font-weight: bold;
+}
+#valorTranf , #transcConta{
+    margin-left: 40px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border-radius: 15px;
+    background: #ffd045;
+    border: none;
+    
+}
+
+div.emprestimo {
+    width: 350px;
+    height: 140px;
+    border-radius: 20px;
+    margin-bottom:15px;
+    background-color: #48ba7e;
+}
+div.emprestimo p {
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 20px;
+    margin: 20px;
+    font-weight: bold;
+}
+
+#valorEmpr {
+    margin-left: 40px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border-radius: 15px;
+    border: none;
+    background: #94e5ba;
+}
+
+div.fecharConta {
+    width: 350px;
+    height: 140px;
+    border-radius: 20px;
+    background-color: #e82f59;
+}
+div.fecharConta p{
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 20px;
+    margin: 20px;
+    font-weight: bold;
+}
+
+#numConta, #senha {
+    margin-left: 40px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border-radius: 15px;
+    background: #f1829c;
+    border: none;
+    
+}
+
+.butao {
+    height: 40px;
+    width: 40px;
+    font-size: 1em;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.butao :hover {
+    color: rgb(73, 69, 69);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin:0;
+}
+
+.dadosTransacoes {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  
+.dadosTransacoes li {
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.dadosTransacoes li.plus {
+    border-right: 5px solid #2ecc71;
+}
+
+.dadosTransacoes li.minus {
+    border-right: 5px solid #c0392b;
+}
+.mais p {
+    font-size: 20px;
+    margin-right: 25px;
+}
+.mais p.plus {
+    font-size: 20px;
+    background: #48ba7e;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 5px;
+}
+
+.menos p {
+    font-size: 20px;
+    margin-right: 25px;
+}
+.menos p.minus {
+    font-size: 20px;
+    background: #e82f59;
+    border-radius: 20px;
+    color: white;
+    padding: 0px 5px;
+}
+
+p.entrada {
+    float: left;
+    margin-left: 25px;
+    font-size: 20px;
+}
+p.entradaValor {
+    float: left;
+    margin: 0 20px;
+    font-size: 30px;
+    color: #48ba7e;
+}
+
+p.saida {
+    float: left;
+    margin-left: 25px;
+    font-size: 20px;
+}
+
+p.saidaValor{
+    float: left;
+    margin: 0 20px;
+    font-size: 30px;
+    color: #e82f59;
+}

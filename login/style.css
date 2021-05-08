@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #5f7C8A;
+    overflow: hidden;
+}
+img{
+    height: 101vh;
+    width: 100vw;
+}
+
+form {
+    background-color: rgba(255, 255, 255, 0.685);
+    max-width: 300px;
+    width: 50%;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    border: solid 1px gray;
+    box-shadow: 3px 2px rgba(0, 0, 0, 0.288);
+}
+
+form h1 {
+    text-align: center;
+    color: #5F7C8A;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#usuario, #senha {
+    width: 100%;
+    height: 45px;
+    border: solid 1px #ccc;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+form button {
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    background: #5F7C8A;
+    color: white;
+    border: 0;
+    border-radius: 20px;
+    
+}
+form button:hover {
+    background: #688796;
+}

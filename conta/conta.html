@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="conta.css">
+    <script src="conta.js" defer ></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="pagina">
+        <header id="dados">
+            <p class="cliente"></p>
+            <p class="cifrao"> $ </p>
+            <p class="dadoContaA"></p>
+            <p class="dadoContaB"></p>
+            <input class="sair" type="button" value="Sair" onclick="sair()">
+        </header>
+        <section id="saldo">
+            <p class="saldoAtual">Saldo Atual</p>
+            <p class="saldoValor"></p>           
+        </section>
+        <section id="transacoes">
+            <ul class="dadosTransacoes">
+            </ul>
+        </section> 
+        <aside id="opcoes">
+            <div class="transferencia">
+                <p>Transferencia</p>
+                <input type="number" name="valorTranf" id="valorTranf" placeholder="Valor" required>
+                <input type="number" name="transcConta" id="transcConta" placeholder="Conta" required>
+                <input type="button" value="&#10095"  class="butao" onclick="transferir()">
+            </div>
+            <div class="emprestimo">
+                <p>Solicitar Emprestimo</p>
+                <input type="number" name="valorEmpr" id="valorEmpr" placeholder="Valor">
+                <input type="button" value="&#10095" class="butao" onclick="emprestimo()">
+            </div>
+            <div class="fecharConta">
+                <p>Fechar Conta</p>
+                <input type="text" name="numConta" id="numConta" placeholder="Usuário">
+                <input type="number" name="senha" id="senha" placeholder="Senha">
+                <input type="button" value="&#10095" class="butao">
+            </div>
+        </aside>
+        <footer id="rodape">
+            <p class="entrada"> Entrada
+                <p class="entradaValor">00000</p>
+            </p>
+            <p class="saida">Saída
+                <p class="saidaValor">0000</p>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
