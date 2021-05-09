@@ -15,17 +15,22 @@ const getId = urlParams.get("ID")
 const contaUser = logins => logins.usuario === getNome
 const contaId = logins => logins.id === getId
 
-const resultado = login.filter(contaUser).filter(contaId)
+const resultado = login
+    .filter(contaUser)
+    .filter(contaId)
 
 const pagina = document.querySelector('body')
 
 const ulTransactions = document.querySelector(".dadosTransacoes")
+const credito = document.querySelector(".entradaValor").value
+const debito = document.querySelector(".saidaValor").value
 
 
 document.querySelector(".cliente").innerHTML = `Olá ${resultado[0].usuario}`
 document.querySelector(".dadoContaA").innerHTML = `${resultado[0].ag}`
 document.querySelector(".dadoContaB").innerHTML = `${resultado[0].id}`
 document.querySelector(".saldoValor").innerHTML = `R$ ${resultado[0].saldo}`
+
 
 const addTransactionN = () => {
     const li = document.createElement('li')
@@ -47,11 +52,14 @@ const addTransactionP = () => {
 const addValorPos = valor => resultado[0].amountPos.push(valor) 
 const addValorNeg = valor => resultado[0].amountNeg.push(valor) 
 
+const total = (acumulador , inicial) => acumulador + inicial
+
 const transferir = () => {
     const valorTransferencia = document.querySelector("#valorTranf").value
     const contaATransferir =  document.querySelector("#transcConta").value  
     const tranferencia = logins => logins.id === contaATransferir  
-    const destino = login.filter(tranferencia)
+    const destino = login
+        .filter(tranferencia)
     
     if(destino.length < 1 || contaATransferir === resultado[0].id){
         window.alert('Conta inválida')
@@ -61,6 +69,8 @@ const transferir = () => {
             addTransactionN()   
             document.querySelector("#valorTranf").value = '' 
             document.querySelector("#transcConta").value = ''
+            const totalNeg = resultado[0].amountNeg.reduce(total)
+            document.querySelector(".saidaValor").innerHTML = `R$ ${totalNeg}`
         }      
     }
 }
@@ -71,4 +81,11 @@ const emprestimo = () => {
         addValorPos(valorEmprestimo)
         addTransactionP()
         document.querySelector("#valorEmpr").value = ''
+        const totalPos = resultado[0].amountPos.reduce(total)
+        document.querySelector(".entradaValor").innerHTML = `R$ ${totalPos}`
 }
+
+
+
+
+
