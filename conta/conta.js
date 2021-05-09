@@ -1,9 +1,9 @@
 const login = [
-    {usuario: 'Davi' , senha:'248886', id:'8080',ag:'es',amountPos:[],amountNeg:[],saldo:"0,00"} ,
-    {usuario: 'Helena' , senha:'022166', id:'2020',ag:'pt',amountPos:[],amountNeg:[],saldo:"0,00"} ,
-    {usuario: 'Maria' , senha:'214250', id:'3030',ag:'ar',amountPos:[],amountNeg:[],saldo:"0,00"} ,
-    {usuario: 'Miguel' , senha:'321644', id:'4040',ag:'us',amountPos:[],amountNeg:[],saldo:"0,00"} ,
-    {usuario: 'Pedro' , senha:'154237', id:'5050',ag:'it',amountPos:[],amountNeg:[],saldo:"0,00"}
+    {usuario: 'Davi' , senha:'248886', id:'8080',ag:'es',amountPos:[],amountNeg:[],saldo:"000"} ,
+    {usuario: 'Helena' , senha:'022166', id:'2020',ag:'pt',amountPos:[],amountNeg:[],saldo:"000"} ,
+    {usuario: 'Maria' , senha:'214250', id:'3030',ag:'ar',amountPos:[],amountNeg:[],saldo:"000"} ,
+    {usuario: 'Miguel' , senha:'321644', id:'4040',ag:'us',amountPos:[],amountNeg:[],saldo:"000"} ,
+    {usuario: 'Pedro' , senha:'154237', id:'5050',ag:'it',amountPos:[],amountNeg:[],saldo:"000"}
 ]
 
 const sair = () => window.location.href = "../index.html" 
@@ -24,6 +24,8 @@ const pagina = document.querySelector('body')
 const ulTransactions = document.querySelector(".dadosTransacoes")
 const credito = document.querySelector(".entradaValor").value
 const debito = document.querySelector(".saidaValor").value
+
+
 
 
 document.querySelector(".cliente").innerHTML = `Olá ${resultado[0].usuario}`
@@ -52,8 +54,8 @@ const addTransactionP = () => {
 const addValorPos = valor => resultado[0].amountPos.push(valor) 
 const addValorNeg = valor => resultado[0].amountNeg.push(valor) 
 
-const total = (acumulador , inicial) => acumulador + inicial
-
+const total = (acumulador , inicial) => Number(acumulador) + Number(inicial)
+let saldo = resultado[0].saldo
 const transferir = () => {
     const valorTransferencia = document.querySelector("#valorTranf").value
     const contaATransferir =  document.querySelector("#transcConta").value  
@@ -61,7 +63,7 @@ const transferir = () => {
     const destino = login
         .filter(tranferencia)
     
-    if(destino.length < 1 || contaATransferir === resultado[0].id){
+    if(destino.length < 1 || contaATransferir === resultado[0].id || valorTransferencia ===''){
         window.alert('Conta inválida')
     }else {
         if(window.confirm(`Transferir R$ ${valorTransferencia} para ${destino[0].usuario}?`)) {
@@ -69,22 +71,37 @@ const transferir = () => {
             addTransactionN()   
             document.querySelector("#valorTranf").value = '' 
             document.querySelector("#transcConta").value = ''
-            const totalNeg = resultado[0].amountNeg.reduce(total)
+            let totalNeg = resultado[0].amountNeg
+                .reduce(total, 0)
             document.querySelector(".saidaValor").innerHTML = `R$ ${totalNeg}`
+            const saldoTotal = Number(saldo) - Number(valorTransferencia)
+            resultado[0].saldo = saldoTotal
+            saldo = saldoTotal
+            document.querySelector(".saldoValor").innerHTML = `R$ ${resultado[0].saldo}`
         }      
     }
 }
 
 const emprestimo = () => {
     const valorEmprestimo = document.querySelector("#valorEmpr").value
-    if(window.confirm(`Confirma o empréstimo de R$ ${valorEmprestimo}?`))
+    if(valorEmprestimo === ''){
+        window.alert('Valor Inválido')
+    }else{
+        if(window.confirm(`Confirma o empréstimo de R$ ${valorEmprestimo}?`)){
         addValorPos(valorEmprestimo)
         addTransactionP()
         document.querySelector("#valorEmpr").value = ''
-        const totalPos = resultado[0].amountPos.reduce(total)
+        const totalPos = resultado[0].amountPos
+            .reduce(total, 0)
         document.querySelector(".entradaValor").innerHTML = `R$ ${totalPos}`
+        const saldoTotal = Number(saldo) + Number(valorEmprestimo)
+        resultado[0].saldo = saldoTotal
+        saldo = saldoTotal
+        document.querySelector(".saldoValor").innerHTML = `R$ ${resultado[0].saldo}`
+    }
+    
 }
-
+}
 
 
 
