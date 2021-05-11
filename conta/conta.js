@@ -7,6 +7,7 @@ const login = [
 ]
 
 
+
 const localStorageOparacoes = JSON.parse(localStorage
     .getItem('operacoes'))
 let operacoes = localStorage
@@ -27,6 +28,7 @@ const urlParams = new URLSearchParams(window.location.search)
 const getNome = urlParams.get("Nome")
 const getId = urlParams.get("ID")
 
+document.title = `Conta ${getNome}`
 
 const contaUser = logins => logins.usuario === getNome
 const contaId = logins => logins.id === getId
@@ -104,16 +106,15 @@ const transferir = () => {
     const destino2 = operacoes
         .filter(tranferencia)
     const movimentoDestino = operacoes.indexOf(destino2[0])
-    const saldoDestino = operacoes[movimentoDestino].saldo
     const addTransfer = valor => operacoes[movimentoDestino].transacoes.push(valor)
-    if(destino.length < 1 || contaATransferir === resultado[0].id || valorTransferencia ==='' || valorTransferencia <= 0){
+    if(movimentoDestino == -1 || contaATransferir === resultado[0].id || valorTransferencia ==='' || valorTransferencia <= 0){
         window.alert('Conta inválida')
     }else {
         if(window.confirm(`Transferir R$ ${valorTransferencia} para ${destino[0].usuario}?`)) {
+            const saldoDestino = operacoes[movimentoDestino].saldo
             addTransactionN(-valorTransferencia)  
             add(-valorTransferencia) 
             addTransfer(+valorTransferencia)
-            console.log(valorTransferencia)
             document.querySelector("#valorTranf").value = '' 
             document.querySelector("#transcConta").value = ''
             /*totalNeg = operacoes[movimentoResultado].transacoes

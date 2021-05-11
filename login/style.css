@@ -8,10 +8,6 @@ body {
     background-color: #5f7C8A;
     overflow: hidden;
 }
-img{
-    height: 101vh;
-    width: 100vw;
-}
 
 form {
     background-color: rgba(255, 255, 255, 0.685);
@@ -39,6 +35,8 @@ form h1 {
     border: solid 1px #ccc;
     padding-left: 10px;
     margin: 10px 0;
+    border-radius: 10px;
+    border: solid 1px gray;
 }
 
 form button {
