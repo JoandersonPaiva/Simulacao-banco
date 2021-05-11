@@ -21,7 +21,7 @@ const atualizarLocalStorage = () => {
     localStorage.setItem('operacoes', JSON.stringify(operacoes))
 }
 
-const sair = () => window.location.href = "../index.html" 
+const sair = (comple=0) => window.location.href = "../index.html" + `?${comple}`
 
 const urlParams = new URLSearchParams(window.location.search)
 const getNome = urlParams.get("Nome")
@@ -155,3 +155,17 @@ const emprestimo = () => {
     }
 }
 
+const remove = () => {
+    const numConta = document.querySelector('#numConta').value
+    const senhaConta = document.querySelector("#senha").value
+    if(resultado[0].id === numConta && resultado[0].senha === senhaConta){
+        login.splice(movimentoResultado2, 1)
+        operacoes.splice(movimentoResultado2, 1)
+        atualizarLocalStorage()
+        sair(`ID=${resultado[0].id}`)
+    }else{
+        window.alert('Exclusão não autorizada!!')
+        document.querySelector('#numConta').value = ''
+        document.querySelector("#senha").value = ''
+    }
+}
