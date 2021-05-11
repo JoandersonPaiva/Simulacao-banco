@@ -1,9 +1,9 @@
 const login = [
-    {usuario: 'Davi' , senha:'248886', id:'8080',ag:'es',amountPos:[],amountNeg:[],saldo:"000"} ,
-    {usuario: 'Helena' , senha:'022166', id:'2020',ag:'pt',amountPos:[],amountNeg:[],saldo:"000"} ,
-    {usuario: 'Maria' , senha:'214250', id:'3030',ag:'ar',amountPos:[],amountNeg:[],saldo:"800"} ,
-    {usuario: 'Miguel' , senha:'321644', id:'4040',ag:'us',amountPos:[],amountNeg:[],saldo:"000"} ,
-    {usuario: 'Pedro' , senha:'154237', id:'5050',ag:'it',amountPos:[],amountNeg:[],saldo:"000"}
+    {usuario: 'Davi' , senha:'248886', id:'8080',ag:'es'} ,
+    {usuario: 'Helena' , senha:'022166', id:'2020',ag:'pt'} ,
+    {usuario: 'Maria' , senha:'214250', id:'3030',ag:'ar'} ,
+    {usuario: 'Miguel' , senha:'321644', id:'4040',ag:'us'} ,
+    {usuario: 'Pedro' , senha:'154237', id:'5050',ag:'it'}
 ]
 
 
@@ -54,27 +54,44 @@ document.querySelector(".saldoValor").innerHTML = `R$ ${operacoes[movimentoResul
 /*====================================================================================
 ============================== adicinar li's ==================================== */
 
-const addTransactionN = () => {
+const addTransactionN = valor => {
     const li = document.createElement('li')
     const hr = document.createElement('hr')
-    li.classList.add("menos")
-    const ultimo = resultado[0].amountNeg[resultado[0].amountNeg.length-1]          
-    li.innerHTML = `<p class="minus"> Transferencia</p><p>R$ ${ultimo}</p>`
+    li.classList.add("menos")       
+    li.innerHTML = `<p class="minus"> Transferencia</p><p>R$ ${valor}</p>`
     ulTransactions.append(li,hr)
 }
 
-const addTransactionP = () => {
+const addTransactionP = valor => {
     const li = document.createElement('li')
     const hr = document.createElement('hr')
     li.classList.add("mais")
-    const ultimo = resultado[0].amountPos[resultado[0].amountPos.length-1]
-    li.innerHTML = `<p class="plus"> Depósito</p><p>R$ ${ultimo}</p>`
+    li.innerHTML = `<p class="plus"> Depósito</p><p>R$ ${valor}</p>`
     ulTransactions.append(li,hr)
 }
 /*=======================================================================================*/ 
-const addValorPos = valor => login[movimentoResultado].amountPos.push(valor) 
-const addValorNeg = valor => login[movimentoResultado].amountNeg.push(valor) 
-const add= valor => operacoes[movimentoResultado].transacoes.push(valor).value
+
+const add = valor => operacoes[movimentoResultado].transacoes.push(valor)
+
+let totalNeg = 0
+let totalPos = 0
+
+const init = () => {
+    const array = operacoes[movimentoResultado].transacoes
+    for(valorAtual in array){
+        if(array[valorAtual] > 0){
+            addTransactionP(array[valorAtual])
+            totalPos += array[valorAtual]
+            document.querySelector(".entradaValor").innerHTML = `R$ ${totalPos}`
+        }else{
+            addTransactionN(array[valorAtual])
+            totalNeg += array[valorAtual]
+            document.querySelector(".saidaValor").innerHTML = `R$ ${totalNeg}`
+
+        }
+    }
+}
+init()
 
 const total = (acumulador , inicial) => Number(acumulador) + Number(inicial)
 let saldo = operacoes[movimentoResultado2].saldo
@@ -84,48 +101,57 @@ const transferir = () => {
     const tranferencia = logins => logins.id === contaATransferir  
     const destino = login
         .filter(tranferencia)
-    const MovimentoDestino = login.indexOf(destino[0])
-    
-    if(destino.length < 1 || contaATransferir === resultado[0].id || valorTransferencia ===''){
+    const destino2 = operacoes
+        .filter(tranferencia)
+    const movimentoDestino = operacoes.indexOf(destino2[0])
+    const saldoDestino = operacoes[movimentoDestino].saldo
+    const addTransfer = valor => operacoes[movimentoDestino].transacoes.push(valor)
+    if(destino.length < 1 || contaATransferir === resultado[0].id || valorTransferencia ==='' || valorTransferencia <= 0){
         window.alert('Conta inválida')
     }else {
         if(window.confirm(`Transferir R$ ${valorTransferencia} para ${destino[0].usuario}?`)) {
-            atualizarLocalStorage()
-            addValorNeg(-valorTransferencia)
-            addTransactionN()  
+            addTransactionN(-valorTransferencia)  
             add(-valorTransferencia) 
+            addTransfer(+valorTransferencia)
+            console.log(valorTransferencia)
             document.querySelector("#valorTranf").value = '' 
             document.querySelector("#transcConta").value = ''
-            let totalNeg = operacoes[movimentoResultado].transacoes
-                .reduce(total, 0)
-            document.querySelector(".saidaValor").innerHTML = `R$ ${-totalNeg}`
+            /*totalNeg = operacoes[movimentoResultado].transacoes
+                .reduce(total, 0)*/
+            totalNeg -= Number(valorTransferencia)
+            document.querySelector(".saidaValor").innerHTML = `R$ ${totalNeg}`
             const saldoTotal = Number(saldo) + Number(-valorTransferencia)
+            const saldoTotalDestino = Number(saldoDestino) + Number(valorTransferencia)
+            operacoes[movimentoDestino].saldo = saldoTotalDestino
             operacoes[movimentoResultado2].saldo = saldoTotal
             saldo = saldoTotal
             document.querySelector(".saldoValor").innerHTML = `R$ ${operacoes[movimentoResultado2].saldo}`
+            atualizarLocalStorage()
         }      
     }
 }
 
+
 const emprestimo = () => {
     const valorEmprestimo = document.querySelector("#valorEmpr").value
-    if(valorEmprestimo === ''){
+    if(valorEmprestimo === '' || valorEmprestimo <= 0){
         window.alert('Valor Inválido')
     }else{
         if(window.confirm(`Confirma o empréstimo de R$ ${valorEmprestimo}?`)){
-            atualizarLocalStorage()
-            addValorPos(+valorEmprestimo)
-            addTransactionP()
+            addTransactionP(valorEmprestimo)
             add(+valorEmprestimo)
             document.querySelector("#valorEmpr").value = ''
-            const totalPos = operacoes[movimentoResultado].transacoes
-                .reduce(total, 0)
+            /*totalPos = operacoes[movimentoResultado].transacoes
+                .reduce(total, 0)*/
+            totalPos += Number(+valorEmprestimo)
             document.querySelector(".entradaValor").innerHTML = `R$ ${+totalPos}`
             const saldoTotal = Number(saldo) + Number(+valorEmprestimo)
             operacoes[movimentoResultado2].saldo = saldoTotal
             saldo = saldoTotal
             document.querySelector(".saldoValor").innerHTML = `R$ ${operacoes[movimentoResultado2].saldo}`
+            atualizarLocalStorage()
         }
     
     }
 }
+
