@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -7,6 +9,7 @@ body {
     background-color: #f0e4e4;
     height: 100vh;
     width: 100vw;
+    font-family: 'Itim', cursive;
 }
 
 div.pagina {
@@ -36,19 +39,21 @@ section#saldo {
 p.cliente {
     float: left;
     margin-left: 40px;
-    font-size: 1.5em;
+    font-size: 1.8em;
     width: 100px;
     text-align: center;
 }
 p.cifrao {
     float: left;
     padding: 4px 15px;
-    border: solid 2px;
+    border-width: 5px;
+    border-style: double ;
     border-radius: 35px;
     margin-right: 3px;
     font-size: 35px;
     font-weight: bold;
-    
+    color: white;
+    background: black;   
 }
 p.dadoContaA {
     float: left;
@@ -76,6 +81,7 @@ input.sair{
     border: none;
     background: white;
     cursor: pointer;
+    font-family: inherit;
 }
 
 input.sair:hover {
@@ -144,6 +150,7 @@ div.transferencia p {
     border-radius: 15px;
     background: #ffd045;
     border: none;
+    font-family: inherit;
     
 }
 
@@ -170,6 +177,7 @@ div.emprestimo p {
     border-radius: 15px;
     border: none;
     background: #94e5ba;
+    font-family: inherit;
 }
 
 div.fecharConta {
@@ -194,7 +202,7 @@ div.fecharConta p{
     border-radius: 15px;
     background: #f1829c;
     border: none;
-    
+    font-family: inherit;
 }
 
 .butao {
@@ -289,4 +297,60 @@ p.saidaValor{
     margin: 0 20px;
     font-size: 30px;
     color: #e82f59;
+}
+
+@media(max-width: 720px){
+
+div.pagina {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.7fr 0.6fr 2fr 2fr 1fr;
+    grid-template-areas: 
+    'dados'
+    'saldo'
+    'transacoes'
+    'opcoes'
+    'rodape';
+}
+section#transacoes{
+    height: 40vh;
+}
+div.transferencia, div.emprestimo, div.fecharConta{
+    width: 320px;
+    position: relative;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+#rodape{
+    height: 10vh;
+    margin-top: 20px;
+}
+#valorTranf , #transcConta, #numConta, #senha{
+    margin-left: 20px;
+}
+p.entradaValor, p.saidaValor{
+    font-size: 1em;
+}
+header#dados {
+    margin: 15px;
+    height: 22vh;
+}
+p.cliente {
+    margin-left: 0;
+}
+p.dadoContaA, p.dadoContaB{
+    float: right;
+    width: 1vw;
+    margin-right: 2px;
+    margin-top: 10px;
+}
+input.sair {
+    float: left;
+    margin-top: 40px;
+    margin-left: 15px;
+}
 }
